@@ -7,24 +7,17 @@ using System.Threading.Tasks;
 
 namespace TP2_Punto2
 {
-    internal class Persona
+    public class Persona
     {
         public string Nombre { get; set; }
         public int Edad {get; set; }
         public int Dni {  get; set; }
         public char Sexo {  get; set; }
-        public decimal Peso { get; set; }
-        public decimal Altura {  get; set; }
+        public double Peso { get; set; }
+        public double Altura {  get; set; }
 
-     
-        public Persona() { }
-        public Persona(string nombre,int edad,char sexo) 
-        {
-            Nombre= nombre;
-            Edad= edad;
-            Sexo = sexo;
-        }
-        public Persona(string nombre, int edad, int dni, char sexo, decimal peso, decimal altura)
+        //contructores 
+        public Persona(string nombre, int edad, int dni, char sexo, double peso, double altura)
         {
             Nombre = nombre;
             Edad = edad;
@@ -34,31 +27,44 @@ namespace TP2_Punto2
             Altura = altura;
 
         }
-        public int IMC(decimal peso,decimal altura)
+        public Persona() { }
+        public Persona(string nombre,int edad,char sexo) 
         {
-            decimal Alturaenmetros = altura / 100;
-            decimal Pesoideal = peso / Alturaenmetros * Alturaenmetros;
+            Nombre= nombre;
+            Edad= edad;
+            Sexo = sexo;
+        }
+        // Metodo para sacar el IMC
+        public int IMC()
+        {
+            double Alturaenmetros = Altura / 100.0; // Convertir altura de cm a metros
+            double Pesoideal = Peso / (Alturaenmetros * Alturaenmetros);
 
             if (Pesoideal < 20)
             {
+                // Por debajo de su peso
                 return -1;
             }
             else if (Pesoideal >= 20 && Pesoideal <= 25)
             {
+                // Peso ideal
                 return 0;
             }
             else
             {
+                // Sobrepeso
                 return 1;
             }
-        
         }
-        public bool MayordeEdad(int edad) 
+
+        //Metodo para comprobar la mayoria de edad
+        public bool MayordeEdad() 
         {
-            int mayoria = edad;
+            int mayoria = Edad;
 
             if (mayoria > 18)
             {
+                
                 return true;
             }
             else 
@@ -66,18 +72,27 @@ namespace TP2_Punto2
                 return false;
             }
         }
-        public void validarsexo(char sexo)
+        //Metodo para comprobar el sexo , en caso de que no este bien definido lo pone automaticamente en H
+        public char Validarsexo()
         {
-            char sexoValidado = char.ToUpper(sexo); // Convertir a mayúsculas
+            char sexoValidado = Sexo; // Convertir a mayúsculas
 
-            if (sexoValidado != 'H' && sexoValidado != 'M')
+            if (sexoValidado=='H' || sexoValidado=='M'|| sexoValidado=='N' )
             {
-                sexoValidado = 'H'; // Establecer como "H" si no es "H" ni "M"
+                return Sexo;
+            }
+            else
+            {
+                Sexo = 'H';
+
+                return Sexo;
+
             }
 
-            return sexoValidado;
         }
-
-        
+        public override string ToString()
+        {
+            return $"Nombre: {Nombre}, Edad: {Edad}, DNI: {Dni}, Sexo: {Sexo}, Peso: {Peso}, Altura: {Altura}";
+        }
     }
 }
